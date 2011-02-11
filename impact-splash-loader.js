@@ -8,9 +8,11 @@ ig.module(
 
 ig.ImpactSplashLoader = ig.Loader.extend({
 	
-	endTimer: 0,
+	endTime: 0,
 	fadeToWhiteTime: 200,
 	fadeToGameTime: 800,
+	logoWidth: 340,
+	logoHeight: 120,
 	
 	end: function() {
 		this.parent();
@@ -56,48 +58,49 @@ ig.ImpactSplashLoader = ig.Loader.extend({
 		var ctx = ig.system.context;
 		var w = ig.system.realWidth;
 		var h = ig.system.realHeight;
-		var s = w / 340 / 3; // Logo size should be 1/3 of the screen width
-		var c = (w - 340 * s)/2;
+		var scale = w / this.logoWidth / 3; // Logo size should be 1/3 of the screen width
+		var center = (w - this.logoWidth * scale)/2;
 		
 		// Clear
 		ctx.fillStyle = 'rgba(0,0,0,0.8)';
 		ctx.fillRect( 0, 0, w, h );
 		
 		// URL
-		ctx.fillStyle = '#888';
+		ctx.fillStyle = 'rgb(128,128,128)';
 		ctx.textAlign = 'right';
 		ctx.font = '10px Arial';
-		ctx.fillText( 'http://impactjs.com', w-10, h-10 );
+		ctx.fillText( 'http://impactjs.com', w - 10, h - 10 );
 		ctx.textAlign = 'left';
 		
 		
 		ctx.save();
 		
-			ctx.translate( c, h / 2.5 );
-			ctx.scale(s,s);
+			ctx.translate( center, h / 2.5 );
+			ctx.scale( scale, scale );
 			
-			// Loading bar
+			// Loading bar ('visually' centered for the Impact logo)
 			ctx.lineWidth = '3';
-			ctx.strokeStyle = '#fff';
-			ctx.strokeRect( 25, 160, 300, 20 );
+			ctx.strokeStyle = 'rgb(255,255,255)';
+			ctx.strokeRect( 25, this.logoHeight + 40, 300, 20 );
 			
-			ctx.fillStyle = '#fff';
-			ctx.fillRect( 30, 165, 290 * this._drawStatus, 10 );		
+			ctx.fillStyle = 'rgb(255,255,255)';
+			ctx.fillRect( 30, this.logoHeight + 45, 290 * this._drawStatus, 10 );		
 			
-			// Logo
-			this.drawPaths( "rgb(255,255,255)", ig.ImpactSplashLoader.PATHS_IMPACT );
+			// Draw 'Impact' text
+			this.drawPaths( 'rgb(255,255,255)', ig.ImpactSplashLoader.PATHS_IMPACT );
 			
 			// Some quick and dirty hackery to make the comet's tail wiggle
 			var comet = ig.ImpactSplashLoader.PATHS_COMET;
-			comet[5][0] = 3 -Math.random()*this._drawStatus*7;
-			comet[5][1] = 3 -Math.random()*this._drawStatus*10;
-			comet[7][0] = 29.5 -Math.random()*this._drawStatus*10;
-			comet[7][1] = 40.4 -Math.random()*this._drawStatus*10;
-			comet[9][0] = 16.1 -Math.random()*this._drawStatus*10;
-			comet[9][1] = 36.1 -Math.random()*this._drawStatus*5;
-			ctx.translate( -Math.random()*this._drawStatus*7, -Math.random()*this._drawStatus*5);
+			comet[5][0] = 3 -Math.random() * this._drawStatus * 7;
+			comet[5][1] = 3 -Math.random() * this._drawStatus * 10;
+			comet[7][0] = 29.5 -Math.random() * this._drawStatus * 10;
+			comet[7][1] = 40.4 -Math.random() * this._drawStatus * 10;
+			comet[9][0] = 16.1 -Math.random() * this._drawStatus * 10;
+			comet[9][1] = 36.1 -Math.random() * this._drawStatus * 5;
+			ctx.translate( -Math.random() * this._drawStatus * 7, -Math.random() * this._drawStatus * 5 );
 			
-			this.drawPaths( "rgb(243,120,31)", comet );
+			// Draw the comet
+			this.drawPaths( 'rgb(243,120,31)', comet );
 			
 		ctx.restore();
 	},
@@ -134,7 +137,6 @@ ig.ImpactSplashLoader.PATHS_IMPACT = [
 	'bp',[],'m',[300.9,66.7],'l',[300.9,85.9],'bc',[300.9,94.9,296.4,99.4,287.4,99.4],'l',[278.5,99.4],'bc',[269.5,99.4,265.1,94.9,265.1,85.9],'l',[265.1,39.1],'bc',[265.1,30.1,269.5,25.6,278.5,25.6],'l',[287.2,25.6],'bc',[296.2,25.6,300.7,30.1,300.7,39.1],'l',[300.7,56.1],'l',[286.4,56.1],'l',[286.4,40.7],'bc',[286.4,38.9,285.6,38.1,283.8,38.1],'l',[282.1,38.1],'bc',[280.4,38.1,279.5,38.9,279.5,40.7],'l',[279.5,84.3],'bc',[279.5,86.1,280.4,86.9,282.1,86.9],'l',[284.0,86.9],'bc',[285.8,86.9,286.6,86.1,286.6,84.3],'l',[286.6,66.7],'l',[300.9,66.7],'cp',[],'f',[],
 	'bp',[],'m',[312.5,98.7],'l',[312.5,39.2],'l',[303.7,39.2],'l',[303.7,26.3],'l',[335.8,26.3],'l',[335.8,39.2],'l',[327.0,39.2],'l',[327.0,98.7],'l',[312.5,98.7],'cp',[],'f',[],
 ];
-
 
 
 });
