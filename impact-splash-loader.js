@@ -13,6 +13,7 @@ ig.ImpactSplashLoader = ig.Loader.extend({
 	fadeToGameTime: 800,
 	logoWidth: 340,
 	logoHeight: 120,
+	color: '255,255,255',
 	
 	end: function() {
 		this.parent();
@@ -46,7 +47,7 @@ ig.ImpactSplashLoader = ig.Loader.extend({
 		}
 		
 		// Draw the white rect over the whole screen
-		ig.system.context.fillStyle = 'rgba(255,255,255,'+alpha+')';
+		ig.system.context.fillStyle = 'rgba(' + this.color + ','+alpha+')';
 		ig.system.context.fillRect( 0, 0, ig.system.realWidth, ig.system.realHeight );
 	},
 	

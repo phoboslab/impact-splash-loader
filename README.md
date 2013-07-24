@@ -23,3 +23,11 @@ Call your `ig.main()` with the `ig.ImpactSplashLoader` class as the last argumen
 	// up by a factor of 2
 	// Use the ig.ImpactSplashLoader class as the preloader
 	ig.main( '#canvas', MyGame, 60, 320, 240, 2, ig.ImpactSplashLoader );
+
+### Customization ###
+
+To change the color that the loader fades to you can inject it into the class before your call to `ig.main`
+
+	ig.ImpactSplashLoader.inject({color : '0,0,0'});
+
+The color is defined in the rgb spectrum.
